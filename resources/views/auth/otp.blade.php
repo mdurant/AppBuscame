@@ -9,6 +9,13 @@
         Introduce el código de 6 dígitos que te enviamos a <strong>{{ $email }}</strong>. Expira en 15 minutos.
     </p>
 
+    @if(!empty($devOtp))
+    <div class="mb-6 rounded-lg border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-900/20 p-4 text-left">
+        <p class="text-sm font-medium text-amber-800 dark:text-amber-200 mb-2">Entorno de desarrollo (sin correo)</p>
+        <p class="text-sm text-amber-700 dark:text-amber-300">Tu código OTP es: <strong class="text-lg tracking-widest">{{ $devOtp }}</strong>. También en <code class="text-xs bg-amber-100 dark:bg-amber-900/40 px-1 rounded">storage/logs/laravel.log</code>.</p>
+    </div>
+    @endif
+
     <form method="POST" action="{{ route('otp.verify') }}" class="space-y-4">
         @csrf
         <input type="hidden" name="email" value="{{ $email }}">

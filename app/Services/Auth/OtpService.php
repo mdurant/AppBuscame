@@ -4,7 +4,9 @@ namespace App\Services\Auth;
 
 use App\Models\Auth\OtpCode;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class OtpService
@@ -24,6 +26,15 @@ class OtpService
             'purpose' => $purpose,
             'expires_at' => now()->addMinutes(self::LIFETIME_MINUTES),
         ]);
+
+        Log::channel('single')->info('OTP de 6 dígitos (sin motor de correo)', [
+            'email' => $user->email,
+            'code' => $code,
+        ]);
+
+        if (app()->environment('local')) {
+            Cache::put('otp_dev:'.$user->email, $code, now()->addMinutes(self::LIFETIME_MINUTES));
+        }
 
         return $code;
     }

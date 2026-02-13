@@ -12,6 +12,16 @@
         Si no lo ves, revisa la carpeta de spam. El enlace expira en 60 minutos.
     </p>
 
+    @if(!empty($verificationUrl))
+    <div class="mb-6 rounded-lg border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-900/20 p-4 text-left">
+        <p class="text-sm font-medium text-amber-800 dark:text-amber-200 mb-2">Entorno de desarrollo (sin correo)</p>
+        <p class="text-sm text-amber-700 dark:text-amber-300 mb-2">Usa este enlace para verificar sin abrir el correo. También puedes revisar <code class="text-xs bg-amber-100 dark:bg-amber-900/40 px-1 rounded">storage/logs/laravel.log</code> para ver el enlace y el OTP.</p>
+        <a href="{{ $verificationUrl }}" class="inline-block rounded-md bg-amber-500 px-3 py-2 text-sm font-medium text-white hover:bg-amber-600">
+            Verificar correo ahora
+        </a>
+    </div>
+    @endif
+
     <form method="POST" action="{{ route('email.resend') }}" class="inline">
         @csrf
         <input type="hidden" name="email" value="{{ session('email') }}">

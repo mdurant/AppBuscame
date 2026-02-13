@@ -10,6 +10,7 @@
     @else
         <script src="https://cdn.tailwindcss.com"></script>
     @endif
+    <script src="https://code.iconify.design/iconify-icon/2.0.0/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
     <style>
@@ -28,6 +29,7 @@
                 <div class="flex items-center gap-4">
                     @auth
                         <a href="{{ route('dashboard') }}" class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Dashboard</a>
+                        <a href="{{ route('settings.profile') }}" class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Mi Perfil</a>
                         <form method="POST" action="{{ route('logout') }}" class="inline">
                             @csrf
                             <button type="submit" class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Cerrar sesión</button>

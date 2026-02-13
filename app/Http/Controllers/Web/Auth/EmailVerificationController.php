@@ -2,21 +2,33 @@
 
 namespace App\Http\Controllers\Web\Auth;
 
+use App\Events\OtpRequested;
 use App\Http\Controllers\Controller;
 use App\Services\Auth\EmailVerificationService;
+use App\Services\Auth\OtpService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class EmailVerificationController extends Controller
 {
     public function __construct(
-        protected EmailVerificationService $emailVerification
+        protected EmailVerificationService $emailVerification,
+        protected OtpService $otpService
     ) {}
 
-    public function showSent(): View
+    public function showSent(Request $request): View
     {
-        return view('auth.verify-email-sent');
+        $verificationUrl = null;
+        if (app()->environment('local')) {
+            $email = $request->session()->get('email');
+            if ($email) {
+                $verificationUrl = Cache::get('verification_url:'.$email);
+            }
+        }
+
+        return view('auth.verify-email-sent', ['verificationUrl' => $verificationUrl]);
     }
 
     public function verify(Request $request): RedirectResponse
@@ -30,6 +42,9 @@ class EmailVerificationController extends Controller
         if (! $user) {
             return redirect()->route('login')->with('error', 'El enlace ha expirado o ya fue usado. Solicita uno nuevo.');
         }
+
+        $code = $this->otpService->generateForUser($user);
+        event(new OtpRequested($user, $code));
 
         return redirect()->route('otp.form')->with('email', $user->email)->with('message', 'Correo verificado. Introduce el código de 6 dígitos que te enviamos.');
     }

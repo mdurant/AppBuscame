@@ -24,7 +24,12 @@ class OtpController extends Controller
             return redirect()->route('login')->with('message', 'Introduce tu correo para recibir el código.');
         }
 
-        return view('auth.otp', ['email' => $email]);
+        $devOtp = null;
+        if (app()->environment('local')) {
+            $devOtp = \Illuminate\Support\Facades\Cache::get('otp_dev:'.$email);
+        }
+
+        return view('auth.otp', ['email' => $email, 'devOtp' => $devOtp]);
     }
 
     public function verify(Request $request): RedirectResponse

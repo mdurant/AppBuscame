@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Auth;
 
 use App\Enums\VerificationStatus;
 use App\Http\Controllers\Controller;
+use App\Services\Auth\UserSessionService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,10 @@ use Illuminate\View\View;
 
 class LoginController extends Controller
 {
+    public function __construct(
+        protected UserSessionService $sessionService
+    ) {}
+
     public function showLoginForm(): View
     {
         $testCredentials = null;
@@ -63,6 +68,7 @@ class LoginController extends Controller
 
     public function logout(Request $request): RedirectResponse
     {
+        $this->sessionService->destroyCurrent($request);
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

@@ -29,4 +29,24 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/publications', [DashboardController::class, 'publications'])->name('dashboard.publications');
+    Route::get('/dashboard/history', [DashboardController::class, 'history'])->name('dashboard.history');
+    Route::get('/dashboard/messages', [DashboardController::class, 'messages'])->name('dashboard.messages');
+    Route::get('/dashboard/payments', [DashboardController::class, 'payments'])->name('dashboard.payments');
+
+    Route::prefix('dashboard/settings')->name('settings.')->group(function () {
+        $settings = \App\Http\Controllers\Web\SettingsController::class;
+        Route::get('/', [$settings, 'index'])->name('index');
+        Route::get('/profile', [$settings, 'profile'])->name('profile');
+        Route::put('/profile', [$settings, 'updateProfile'])->name('profile.update');
+        Route::post('/account/destroy', [$settings, 'destroyAccount'])->name('account.destroy');
+        Route::get('/password', [$settings, 'password'])->name('password');
+        Route::put('/password', [$settings, 'updatePassword'])->name('password.update');
+        Route::get('/2fa', [$settings, 'twoFactor'])->name('2fa');
+        Route::post('/2fa/enable', [$settings, 'enableTwoFactor'])->name('2fa.enable');
+        Route::post('/2fa/confirm', [$settings, 'confirmTwoFactor'])->name('2fa.confirm');
+        Route::post('/2fa/disable', [$settings, 'disableTwoFactor'])->name('2fa.disable');
+        Route::get('/sessions', [$settings, 'sessions'])->name('sessions');
+        Route::delete('/sessions/{userSession}', [$settings, 'destroySession'])->name('sessions.destroy');
+    });
 });
