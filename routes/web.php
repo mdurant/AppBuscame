@@ -9,6 +9,8 @@ use App\Http\Controllers\Web\PropertySearchController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PropertySearchController::class, 'index'])->name('home');
+Route::get('/captcha', [\App\Http\Controllers\Web\CaptchaController::class, 'image'])->name('captcha')->middleware('throttle:30,1');
+Route::get('/terms/{termsVersion}', [\App\Http\Controllers\Web\TermsController::class, 'show'])->name('terms.show');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -16,6 +18,11 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [RegisterController::class, 'register']);
+
+    Route::get('/forgot-password', [\App\Http\Controllers\Web\ForgotPasswordController::class, 'showForm'])->name('password.request');
+    Route::post('/forgot-password', [\App\Http\Controllers\Web\ForgotPasswordController::class, 'sendLink'])->name('password.email');
+    Route::get('/reset-password/{token}', [\App\Http\Controllers\Web\ResetPasswordController::class, 'showForm'])->name('password.reset');
+    Route::post('/reset-password', [\App\Http\Controllers\Web\ResetPasswordController::class, 'reset'])->name('password.update');
 
     Route::get('/verify-email-sent', [EmailVerificationController::class, 'showSent'])->name('verify-email.sent');
     Route::get('/email/verify', [EmailVerificationController::class, 'verify'])->name('email.verify');

@@ -5,7 +5,84 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+:root {
+    --color-primary: #633dfe;
+    --color-primary-light: #f3efff;
+    --color-primary-muted: #7a5afe1a;
+    --color-primary-subtle: #633dfe0d;
+    --color-primary-33: #633dfe33;
+    --color-sidebar: #1a1b29;
+    --color-sidebar-hover: #252636;
+    --color-surface-dark: #15181d;
+    --color-surface-darker: #0b1324;
+    --color-surface-darkest: #081226;
+    --color-surface: #f8f8fa;
+    --color-surface-alt: #fcfcfc;
+    --color-surface-elevated: #ffffff;
+    --color-border: #e5e5e5;
+    --color-border-light: #f0f1f4;
+    --color-text: #2c2c2c;
+    --color-text-muted: #5f6a87;
+    --color-text-subtle: #7883a0;
+    --color-text-light: #969fb5;
+    --color-text-lighter: #b4baca;
+    --color-text-inverse: #ffffff;
+    --color-success: #08a36b;
+    --color-success-bg: #e6f6f0;
+    --color-error: #ff5e5e;
+    --color-error-bg: #ffefef;
+    --color-warning: #eb602d;
+    --color-warning-bg: #f0b24d;
+    --color-accent-magenta: #db3aa8;
+    --radius-card: 0.75rem;
+    --radius-button: 0.5rem;
+    --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+}
+
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    --font-sans: 'Outfit', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Paleta custom (imágenes de apoyo) */
+    --color-primary: #633dfe;
+    --color-primary-light: #f3efff;
+    --color-primary-muted: #7a5afe1a;
+    --color-primary-subtle: #633dfe0d;
+    --color-primary-33: #633dfe33;
+
+    --color-sidebar: #1a1b29;
+    --color-sidebar-hover: #252636;
+    --color-surface-dark: #15181d;
+    --color-surface-darker: #0b1324;
+    --color-surface-darkest: #081226;
+
+    --color-surface: #f8f8fa;
+    --color-surface-alt: #fcfcfc;
+    --color-surface-elevated: #ffffff;
+    --color-border: #e5e5e5;
+    --color-border-light: #f0f1f4;
+
+    --color-text: #2c2c2c;
+    --color-text-muted: #5f6a87;
+    --color-text-subtle: #7883a0;
+    --color-text-light: #969fb5;
+    --color-text-lighter: #b4baca;
+    --color-text-inverse: #ffffff;
+
+    --color-success: #08a36b;
+    --color-success-bg: #e6f6f0;
+    --color-error: #ff5e5e;
+    --color-error-bg: #ffefef;
+    --color-warning: #eb602d;
+    --color-warning-bg: #f0b24d;
+    --color-accent-magenta: #db3aa8;
+
+    --radius-card: 0.75rem;
+    --radius-button: 0.5rem;
+    --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+}
+
+/* Fuente Outfit en todo el sitio. Pesos: 200 ExtraLight, 300 Light, 400 Regular, 500 Medium, 600 SemiBold, 700 Bold */
+body {
+    font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif;
 }

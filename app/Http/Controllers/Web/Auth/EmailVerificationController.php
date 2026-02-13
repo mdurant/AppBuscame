@@ -9,6 +9,7 @@ use App\Services\Auth\OtpService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class EmailVerificationController extends Controller
@@ -64,8 +65,29 @@ class EmailVerificationController extends Controller
 
         $token = $this->emailVerification->createVerification($user);
         $url = route('email.verify', ['token' => $token]);
+
+        if (app()->environment('local')) {
+            Cache::put('verification_url:'.$user->email, $url, now()->addMinutes(60));
+            $this->logVerificationLink($user->email, $url, 'Reenvío');
+        }
+
         \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\VerifyEmailMail($user, $url));
 
         return back()->with('message', 'Hemos enviado un nuevo enlace a tu correo.');
+    }
+
+    /**
+     * Log del enlace de verificación en local para simular envío y probar sin correo real.
+     */
+    private function logVerificationLink(string $email, string $url, string $origen): void
+    {
+        $message = sprintf(
+            "\n========== ENLACE DE VERIFICACIÓN (%s) ==========\nCorreo: %s\nEnlace (copiar y abrir en el navegador):\n%s\n==========================================\n",
+            $origen,
+            $email,
+            $url
+        );
+        Log::channel('verification')->info($message);
+        Log::channel('single')->info('[VERIFICATION] '.$origen.' - '.$email, ['url' => $url]);
     }
 }

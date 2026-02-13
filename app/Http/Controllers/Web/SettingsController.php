@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
+use Carbon\Carbon;
 
 class SettingsController extends Controller
 {
@@ -29,9 +30,29 @@ class SettingsController extends Controller
     {
         $user = $request->user()->load('profile');
 
+        $currentSession = null;
+        $latestActivityAt = null;
+        $sessionStartedAt = null;
+        $sessions = $user->userSessions()->orderByDesc('last_activity_at')->get();
+        $sessionIdHash = hash('sha256', $request->session()->getId());
+        foreach ($sessions as $s) {
+            if (hash_equals($s->token_hash ?? '', $sessionIdHash)) {
+                $currentSession = $s;
+                $sessionStartedAt = $s->created_at;
+                $latestActivityAt = $s->last_activity_at;
+                break;
+            }
+        }
+        if (! $latestActivityAt && $sessions->isNotEmpty()) {
+            $latestActivityAt = $sessions->first()->last_activity_at;
+        }
+
         return view('dashboard.settings.index', [
             'user' => $user,
             'activeTab' => 'profile',
+            'currentSession' => $currentSession,
+            'latestActivityAt' => $latestActivityAt,
+            'sessionStartedAt' => $sessionStartedAt,
         ]);
     }
 
@@ -42,6 +63,8 @@ class SettingsController extends Controller
             'first_name' => ['required', 'string', 'max:100'],
             'last_name' => ['required', 'string', 'max:100'],
             'phone' => ['nullable', 'string', 'max:30'],
+            'gender' => ['nullable', 'string', 'in:Hombre,Mujer,Prefiero no aportar'],
+            'date_of_birth' => ['nullable', 'date_format:d-m-Y', 'before:today'],
         ], [
             'first_name.required' => 'El nombre es obligatorio.',
             'last_name.required' => 'Los apellidos son obligatorios.',
@@ -54,6 +77,8 @@ class SettingsController extends Controller
                 'first_name' => $validated['first_name'],
                 'last_name' => $validated['last_name'],
                 'phone' => $validated['phone'] ?? null,
+                'gender' => $validated['gender'] ?? null,
+                'date_of_birth' => isset($validated['date_of_birth']) ? Carbon::createFromFormat('d-m-Y', $validated['date_of_birth']) : null,
             ]
         );
 
@@ -134,7 +159,7 @@ class SettingsController extends Controller
 
         $user = $request->user();
         if (! $this->twoFactor->confirm($user, $request->input('code'))) {
-            return back()->with('error', 'Código inválido. Intenta de nuevo.');
+            return back()->withErrors(['code' => 'Código inválido. Comprueba los 6 dígitos e inténtalo de nuevo.']);
         }
 
         $codes = $this->twoFactor->generateBackupCodes($user);

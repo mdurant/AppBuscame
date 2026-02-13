@@ -8,20 +8,20 @@
     <h1 class="text-2xl font-bold mb-2">Configuración</h1>
     <p class="text-gray-600 dark:text-gray-400 mb-8">Administra tu perfil y la configuración de tu cuenta.</p>
 
-    <nav class="flex flex-wrap gap-1 border-b border-gray-200 dark:border-gray-700 mb-8" aria-label="Tabs">
-        <a href="{{ route('settings.profile') }}" class="inline-flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-t-lg border-b-2 transition {{ ($activeTab ?? '') === 'profile' ? 'border-violet-600 text-violet-600 dark:text-violet-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300' }}">
+    <nav class="flex flex-wrap gap-1 border-b border-gray-200 mb-8" aria-label="Tabs">
+        <a href="{{ route('settings.profile') }}" class="inline-flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-t-lg border-b-2 transition {{ ($activeTab ?? '') === 'profile' ? 'border-[#375CFF] text-[#375CFF]' : 'border-transparent text-gray-500 hover:text-gray-700' }}">
             <iconify-icon icon="tabler:user" width="20" height="20"></iconify-icon>
             Ficha Personal
         </a>
-        <a href="{{ route('settings.password') }}" class="inline-flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-t-lg border-b-2 transition {{ ($activeTab ?? '') === 'password' ? 'border-violet-600 text-violet-600 dark:text-violet-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300' }}">
+        <a href="{{ route('settings.password') }}" class="inline-flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-t-lg border-b-2 transition {{ ($activeTab ?? '') === 'password' ? 'border-[#375CFF] text-[#375CFF]' : 'border-transparent text-gray-500 hover:text-gray-700' }}">
             <iconify-icon icon="tabler:lock" width="20" height="20"></iconify-icon>
             Contraseña
         </a>
-        <a href="{{ route('settings.2fa') }}" class="inline-flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-t-lg border-b-2 transition {{ ($activeTab ?? '') === '2fa' ? 'border-violet-600 text-violet-600 dark:text-violet-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300' }}">
+        <a href="{{ route('settings.2fa') }}" class="inline-flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-t-lg border-b-2 transition {{ ($activeTab ?? '') === '2fa' ? 'border-[#375CFF] text-[#375CFF]' : 'border-transparent text-gray-500 hover:text-gray-700' }}">
             <iconify-icon icon="tabler:shield" width="20" height="20"></iconify-icon>
             Two-Factor (2FA)
         </a>
-        <a href="{{ route('settings.sessions') }}" class="inline-flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-t-lg border-b-2 transition {{ ($activeTab ?? '') === 'sessions' ? 'border-violet-600 text-violet-600 dark:text-violet-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300' }}">
+        <a href="{{ route('settings.sessions') }}" class="inline-flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-t-lg border-b-2 transition {{ ($activeTab ?? '') === 'sessions' ? 'border-[#375CFF] text-[#375CFF]' : 'border-transparent text-gray-500 hover:text-gray-700' }}">
             <iconify-icon icon="tabler:device-desktop" width="20" height="20"></iconify-icon>
             Sesiones Activas
         </a>

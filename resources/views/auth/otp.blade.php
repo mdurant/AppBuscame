@@ -1,48 +1,40 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
-@section('title', 'Código de verificación')
+@section('title', 'Verificación en dos pasos')
 
 @section('content')
-<div class="max-w-md mx-auto">
-    <h1 class="text-2xl font-bold mb-2">Código de verificación</h1>
-    <p class="text-gray-600 dark:text-gray-400 mb-6">
-        Introduce el código de 6 dígitos que te enviamos a <strong>{{ $email }}</strong>. Expira en 15 minutos.
-    </p>
+<h1 class="text-3xl font-bold text-gray-900 mb-2">Código de verificación</h1>
+<p class="text-gray-500 mb-6">
+    Introduce el código de 6 dígitos enviado a <strong>{{ $email }}</strong>. Expira en 15 minutos.
+</p>
 
-    @if(!empty($devOtp))
-    <div class="mb-6 rounded-lg border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-900/20 p-4 text-left">
-        <p class="text-sm font-medium text-amber-800 dark:text-amber-200 mb-2">Entorno de desarrollo (sin correo)</p>
-        <p class="text-sm text-amber-700 dark:text-amber-300">Tu código OTP es: <strong class="text-lg tracking-widest">{{ $devOtp }}</strong>. También en <code class="text-xs bg-amber-100 dark:bg-amber-900/40 px-1 rounded">storage/logs/laravel.log</code>.</p>
-    </div>
-    @endif
-
-    <form method="POST" action="{{ route('otp.verify') }}" class="space-y-4">
-        @csrf
-        <input type="hidden" name="email" value="{{ $email }}">
-        <div>
-            <label for="code" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Código de 6 dígitos</label>
-            <input type="text" name="code" id="code" value="{{ old('code') }}" required autofocus
-                maxlength="6" pattern="[0-9]{6}" inputmode="numeric" autocomplete="one-time-code"
-                class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-center text-lg tracking-widest text-gray-900 dark:text-gray-100 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                placeholder="000000">
-        </div>
-        <div>
-            <button type="submit" class="w-full rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
-                Verificar y continuar
-            </button>
-        </div>
-    </form>
-
-    <form method="POST" action="{{ route('otp.resend') }}" class="mt-4">
-        @csrf
-        <input type="hidden" name="email" value="{{ $email }}">
-        <button type="submit" class="text-sm text-indigo-600 hover:text-indigo-500">
-            No recibí el código – Renovar
-        </button>
-    </form>
-
-    <p class="mt-4 text-sm text-gray-500">
-        <a href="{{ route('login') }}" class="text-indigo-600 hover:text-indigo-500">Volver al inicio de sesión</a>
-    </p>
+@if(!empty($devOtp))
+<div class="mb-6 rounded-xl border border-amber-200 bg-amber-50 p-4">
+    <p class="text-sm font-medium text-amber-800 mb-2">Entorno de desarrollo (sin correo)</p>
+    <p class="text-sm text-amber-700">Tu código OTP: <strong class="text-lg tracking-widest">{{ $devOtp }}</strong></p>
 </div>
+@endif
+
+<form method="POST" action="{{ route('otp.verify') }}" class="space-y-5">
+    @csrf
+    <input type="hidden" name="email" value="{{ $email }}">
+    <div>
+        <label for="code" class="block text-sm font-medium text-gray-700 mb-1">Código de 6 dígitos *</label>
+        <input type="text" name="code" id="code" value="{{ old('code') }}" required autofocus maxlength="6" pattern="[0-9]{6}" inputmode="numeric" autocomplete="one-time-code" placeholder="000000"
+            class="block w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-center text-xl tracking-[0.4em] text-gray-900 shadow-sm auth-input focus:ring-2 focus:ring-offset-0">
+    </div>
+    <button type="submit" class="w-full rounded-lg auth-btn-primary px-4 py-3 text-sm font-medium text-white focus:ring-2 focus:ring-[#375CFF] focus:ring-offset-2 transition">
+        Verificar y continuar
+    </button>
+</form>
+
+<form method="POST" action="{{ route('otp.resend') }}" class="mt-4">
+    @csrf
+    <input type="hidden" name="email" value="{{ $email }}">
+    <button type="submit" class="text-sm font-medium auth-link">No recibí el código – Renovar</button>
+</form>
+
+<p class="mt-6 text-center text-sm text-gray-600">
+    <a href="{{ route('login') }}" class="font-medium auth-link">Volver a iniciar sesión</a>
+</p>
 @endsection

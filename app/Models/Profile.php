@@ -16,7 +16,16 @@ class Profile extends Model
         'last_name',
         'avatar_path',
         'phone',
+        'gender',
+        'date_of_birth',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'date_of_birth' => 'date',
+        ];
+    }
 
     public function user(): BelongsTo
     {
