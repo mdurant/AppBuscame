@@ -16,6 +16,8 @@ class Profile extends Model
         'last_name',
         'avatar_path',
         'phone',
+        'region',
+        'city',
     ];
 
     public function user(): BelongsTo

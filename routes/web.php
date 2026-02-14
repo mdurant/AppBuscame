@@ -34,6 +34,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/messages', [DashboardController::class, 'messages'])->name('dashboard.messages');
     Route::get('/dashboard/payments', [DashboardController::class, 'payments'])->name('dashboard.payments');
 
+    Route::middleware('admin')->prefix('dashboard/admin')->name('admin.')->group(function () {
+        Route::get('/users', [\App\Http\Controllers\Web\Admin\AdminUserController::class, 'index'])->name('users.index');
+        Route::get('/users/{user}', [\App\Http\Controllers\Web\Admin\AdminUserController::class, 'show'])->name('users.show');
+        Route::get('/publications', [\App\Http\Controllers\Web\Admin\AdminPublicationController::class, 'index'])->name('publications.index');
+        Route::get('/publications/{property}', [\App\Http\Controllers\Web\Admin\AdminPublicationController::class, 'show'])->name('publications.show');
+    });
+
     Route::prefix('dashboard/settings')->name('settings.')->group(function () {
         $settings = \App\Http\Controllers\Web\SettingsController::class;
         Route::get('/', [$settings, 'index'])->name('index');

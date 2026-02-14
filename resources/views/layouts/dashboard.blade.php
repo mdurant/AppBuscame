@@ -49,6 +49,18 @@
                         <iconify-icon icon="tabler:credit-card" width="20" height="20"></iconify-icon>
                         Pagos e Historial
                     </a>
+                    @if(auth()->user()?->isAdmin())
+                    <div class="my-2 border-t border-gray-200 dark:border-gray-700"></div>
+                    <p class="px-3 py-1.5 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Admin</p>
+                    <a href="{{ route('admin.users.index') }}" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition {{ str_starts_with($rn ?? '', 'admin.users') ? 'bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-300' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50' }}">
+                        <iconify-icon icon="tabler:users" width="20" height="20"></iconify-icon>
+                        Usuarios
+                    </a>
+                    <a href="{{ route('admin.publications.index') }}" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition {{ str_starts_with($rn ?? '', 'admin.publications') ? 'bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-300' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50' }}">
+                        <iconify-icon icon="tabler:file-text" width="20" height="20"></iconify-icon>
+                        Publicaciones
+                    </a>
+                    @endif
                     <div class="my-2 border-t border-gray-200 dark:border-gray-700"></div>
                     <a href="{{ route('settings.profile') }}" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition {{ str_starts_with($rn ?? '', 'settings.') ? 'bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-300' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50' }}">
                         <iconify-icon icon="tabler:user-cog" width="20" height="20"></iconify-icon>

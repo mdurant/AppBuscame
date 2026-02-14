@@ -15,19 +15,19 @@ return [
 
     'users' => [
         [
-            'email' => 'maria@ejemplo.cl',
-            'name' => 'María González',
-            'description' => 'Propietaria (publicar propiedades, mensajes)',
+            'email' => 'admin@integraltech.cl',
+            'name' => 'Admin',
+            'description' => 'Administrador (panel admin, usuarios y publicaciones)',
         ],
         [
-            'email' => 'carlos@ejemplo.cl',
-            'name' => 'Carlos Rojas',
-            'description' => 'Arrendatario / segundo usuario verificado',
+            'email' => 'cliente@integraltech.cl',
+            'name' => 'Cliente',
+            'description' => 'Cliente de la plataforma',
         ],
         [
-            'email' => 'test@ejemplo.cl',
-            'name' => 'Usuario Test',
-            'description' => 'Usuario genérico para pruebas',
+            'email' => 'usuario@integraltech.cl',
+            'name' => 'Usuario',
+            'description' => 'Usuario publicante',
         ],
     ],
 

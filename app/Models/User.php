@@ -27,6 +27,7 @@ class User extends Authenticatable
         'email',
         'password',
         'verification_status',
+        'role',
     ];
 
     protected $hidden = [
@@ -91,5 +92,10 @@ class User extends Authenticatable
     public function hasTwoFactorEnabled(): bool
     {
         return $this->twoFactorSecret?->isConfirmed() ?? false;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
     }
 }
