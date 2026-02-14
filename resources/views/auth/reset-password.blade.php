@@ -9,11 +9,7 @@
 <form method="POST" action="{{ route('password.update') }}" class="space-y-5">
     @csrf
     <input type="hidden" name="token" value="{{ $token }}">
-    <div>
-        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo *</label>
-        <input type="email" name="email" id="email" value="{{ old('email', $email) }}" required autofocus autocomplete="email"
-            class="block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-900 shadow-sm auth-input focus:ring-2 focus:ring-offset-0">
-    </div>
+    <x-input-group-email name="email" label="Correo" :value="old('email', $email)" placeholder="info@gmail.com" required autofocus />
     <div>
         <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Nueva contraseña *</label>
         <input type="password" name="password" id="password" required autocomplete="new-password" placeholder="Mín. 8 caracteres, mayúscula, número y símbolo"

@@ -8,11 +8,7 @@
 
 <form method="POST" action="{{ route('password.email') }}" class="space-y-5">
     @csrf
-    <div>
-        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo *</label>
-        <input type="email" name="email" id="email" value="{{ old('email') }}" required autofocus autocomplete="email" placeholder="tu@correo.com"
-            class="block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-900 shadow-sm auth-input focus:ring-2 focus:ring-offset-0">
-    </div>
+    <x-input-group-email name="email" label="Correo" placeholder="info@gmail.com" required autofocus />
     <button type="submit" class="w-full rounded-lg auth-btn-primary px-4 py-3 text-sm font-medium text-white focus:ring-2 focus:ring-[#375CFF] focus:ring-offset-2 transition">
         Enviar enlace
     </button>

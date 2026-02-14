@@ -59,16 +59,23 @@ class SettingsController extends Controller
     public function updateProfile(Request $request): RedirectResponse
     {
         $user = $request->user();
+        // Normalizar teléfono a E.164 antes de validar (quitar espacios)
+        if ($request->has('phone') && is_string($request->phone)) {
+            $request->merge(['phone' => preg_replace('/\s/', '', $request->phone)]);
+        }
         $validated = $request->validate([
             'first_name' => ['required', 'string', 'max:100'],
             'last_name' => ['required', 'string', 'max:100'],
-            'phone' => ['nullable', 'string', 'max:30'],
+            'phone' => ['nullable', 'string', 'max:20', 'regex:/^\+569\d{8}$/'],
             'gender' => ['nullable', 'string', 'in:Hombre,Mujer,Prefiero no aportar'],
             'date_of_birth' => ['nullable', 'date_format:d-m-Y', 'before:today'],
         ], [
             'first_name.required' => 'El nombre es obligatorio.',
             'last_name.required' => 'Los apellidos son obligatorios.',
+            'phone.regex' => 'El teléfono debe ser celular Chile: +56 9 seguido de 8 dígitos (ej. +56 9 1234 5678).',
         ]);
+
+        $phone = isset($validated['phone']) && $validated['phone'] !== '' ? $validated['phone'] : null;
 
         $user->update(['name' => trim($validated['first_name'].' '.$validated['last_name'])]);
         $user->profile()->updateOrCreate(
@@ -76,7 +83,7 @@ class SettingsController extends Controller
             [
                 'first_name' => $validated['first_name'],
                 'last_name' => $validated['last_name'],
-                'phone' => $validated['phone'] ?? null,
+                'phone' => $phone,
                 'gender' => $validated['gender'] ?? null,
                 'date_of_birth' => isset($validated['date_of_birth']) ? Carbon::createFromFormat('d-m-Y', $validated['date_of_birth']) : null,
             ]

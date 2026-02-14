@@ -22,14 +22,12 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
-                    <p class="mt-1 text-gray-600">{{ $user->email }}</p>
+                    <x-input-group-email name="email_display" label="Correo electrónico" :value="$user->email" placeholder="info@gmail.com" disabled />
+                    <p class="mt-1 text-xs text-gray-500">El correo no se puede cambiar desde aquí.</p>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
-                        <input type="text" name="phone" id="phone" value="{{ old('phone', $user->profile?->phone) }}" placeholder="Opcional"
-                            class="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-gray-900 shadow-sm focus:border-[#375CFF] focus:ring-[#375CFF]">
+                        <x-input-group-phone name="phone" label="Teléfono (celular Chile)" :value="$user->profile?->phone" placeholder="+56 9 1234 5678" />
                     </div>
                     <div>
                         <label for="gender" class="block text-sm font-medium text-gray-700 mb-1">Sexo</label>

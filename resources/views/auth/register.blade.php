@@ -39,11 +39,7 @@
                 class="block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-900 shadow-sm auth-input focus:ring-2 focus:ring-offset-0">
         </div>
     </div>
-    <div>
-        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo *</label>
-        <input type="email" name="email" id="email" value="{{ old('email') }}" required autocomplete="email" placeholder="tu@correo.com"
-            class="block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-900 shadow-sm auth-input focus:ring-2 focus:ring-offset-0">
-    </div>
+    <x-input-group-email name="email" label="Correo" placeholder="info@gmail.com" required />
     <div>
         <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña *</label>
         <input type="password" name="password" id="password" required autocomplete="new-password" placeholder="Mín. 8 caracteres, mayúscula, número y símbolo"

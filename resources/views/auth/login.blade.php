@@ -36,11 +36,7 @@
 
 <form method="POST" action="{{ route('login') }}" class="space-y-5">
     @csrf
-    <div>
-        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo *</label>
-        <input type="email" name="email" id="email" value="{{ old('email') }}" required autofocus autocomplete="email" placeholder="tu@correo.com"
-            class="block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-900 shadow-sm auth-input focus:ring-2 focus:ring-offset-0">
-    </div>
+    <x-input-group-email name="email" label="Correo" placeholder="info@gmail.com" required autofocus />
     <div>
         <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña *</label>
         <input type="password" name="password" id="password" required autocomplete="current-password" placeholder="••••••••"
