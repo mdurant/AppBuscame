@@ -18,6 +18,8 @@ class Profile extends Model
         'phone',
         'gender',
         'date_of_birth',
+        'region',
+        'city',
     ];
 
     protected function casts(): array

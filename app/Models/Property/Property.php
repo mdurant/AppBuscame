@@ -76,6 +76,16 @@ class Property extends Model
         return $this->hasOne(PropertyScore::class);
     }
 
+    public function propertyViews(): HasMany
+    {
+        return $this->hasMany(PropertyView::class);
+    }
+
+    public function messageThreads(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\Messaging\MessageThread::class, 'property_id');
+    }
+
     public function isDraft(): bool
     {
         return $this->status === PropertyStatus::Draft;

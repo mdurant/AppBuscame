@@ -12,6 +12,8 @@ class DatabaseSeeder extends Seeder
             TermsVersionSeeder::class,
             SourceSeeder::class,
             UserSeeder::class,
+            AdminPlatformSeeder::class,
+            DummyUsersChileSeeder::class,
             PropertySeeder::class,
             FaqSeeder::class,
         ]);
